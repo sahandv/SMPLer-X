@@ -1,0 +1,475 @@
+.
+├── assets
+│   ├── 001.gif
+│   ├── 002.gif
+│   ├── 003.gif
+│   ├── 004.gif
+│   ├── 005.gif
+│   ├── 006.gif
+│   ├── expression_distribution.pdf
+│   ├── expression_distribution.png
+│   ├── factor_data.pdf
+│   ├── factor_data.png
+│   ├── smpler_x_vis1.jpg
+│   └── teaser_complete.png
+├── common
+│   ├── base.py
+│   ├── logger.py
+│   ├── nets
+│   │   ├── layer.py
+│   │   ├── loss.py
+│   │   └── smpler_x.py
+│   ├── timer.py
+│   └── utils
+│       ├── dir.py
+│       ├── distribute_utils.py
+│       ├── human_model_files
+│       │   ├── smpl
+│       │   │   ├── SMPL_FEMALE.pkl
+│       │   │   ├── SMPL_MALE.pkl
+│       │   │   ├── SMPL_NEUTRAL.pkl
+│       │   │   └── smpl_uv.npz
+│       │   └── smplx
+│       │       ├── MANO_SMPLX_vertex_ids.pkl
+│       │       ├── SMPLX_FEMALE.npz
+│       │       ├── SMPL-X__FLAME_vertex_ids.npy
+│       │       ├── SMPLX_MALE.npz
+│       │       ├── SMPLX_NEUTRAL.npz
+│       │       ├── SMPLX_NEUTRAL.pkl
+│       │       └── SMPLX_to_J14.pkl
+│       ├── human_models.py
+│       ├── inference_utils.py
+│       ├── __init__.py
+│       ├── preprocessing.py
+│       ├── smplx
+│       │   ├── examples
+│       │   │   ├── demo_layers.py
+│       │   │   ├── demo.py
+│       │   │   ├── vis_flame_vertices.py
+│       │   │   └── vis_mano_vertices.py
+│       │   ├── LICENSE
+│       │   ├── README.md
+│       │   ├── setup.py
+│       │   ├── smplx
+│       │   │   ├── body_models.py
+│       │   │   ├── __init__.py
+│       │   │   ├── joint_names.py
+│       │   │   ├── lbs.py
+│       │   │   ├── utils.py
+│       │   │   ├── vertex_ids.py
+│       │   │   └── vertex_joint_selector.py
+│       │   └── tools
+│       │       ├── clean_ch.py
+│       │       ├── __init__.py
+│       │       ├── merge_smplh_mano.py
+│       │       └── README.md
+│       ├── transforms.py
+│       └── vis.py
+├── data
+│   ├── AGORA
+│   │   └── AGORA.py
+│   ├── ARCTIC
+│   │   └── ARCTIC.py
+│   ├── BEDLAM
+│   │   └── BEDLAM.py
+│   ├── Behave
+│   │   └── Behave.py
+│   ├── CHI3D
+│   │   └── CHI3D.py
+│   ├── CrowdPose
+│   │   └── CrowdPose.py
+│   ├── dataset.py
+│   ├── EgoBody_Egocentric
+│   │   └── EgoBody_Egocentric.py
+│   ├── EgoBody_Kinect
+│   │   └── EgoBody_Kinect.py
+│   ├── EHF
+│   │   └── EHF.py
+│   ├── FIT3D
+│   │   └── FIT3D.py
+│   ├── GTA_Human2
+│   │   └── GTA_Human2.py
+│   ├── Human36M
+│   │   └── Human36M.py
+│   ├── HumanArt
+│   │   └── HumanArt.py
+│   ├── humandata.py
+│   ├── HumanSC3D
+│   │   └── HumanSC3D.py
+│   ├── InstaVariety
+│   │   └── InstaVariety.py
+│   ├── LSPET
+│   │   └── LSPET.py
+│   ├── MPII
+│   │   └── MPII.py
+│   ├── MPI_INF_3DHP
+│   │   └── MPI_INF_3DHP.py
+│   ├── MSCOCO
+│   │   └── MSCOCO.py
+│   ├── MTP
+│   │   └── MTP.py
+│   ├── MuCo
+│   │   └── MuCo.py
+│   ├── OCHuman
+│   │   └── OCHuman.py
+│   ├── PoseTrack
+│   │   └── PoseTrack.py
+│   ├── PROX
+│   │   └── PROX.py
+│   ├── PW3D
+│   │   └── PW3D.py
+│   ├── RenBody
+│   │   └── RenBody.py
+│   ├── RenBody_HiRes
+│   │   └── RenBody_HiRes.py
+│   ├── RICH
+│   │   └── RICH.py
+│   ├── SHAPY
+│   │   ├── mesh-mesh-intersection
+│   │   │   ├── body_measurements
+│   │   │   │   ├── body_measurements.py
+│   │   │   │   ├── cwh_measurements.py
+│   │   │   │   └── __init__.py
+│   │   │   ├── data
+│   │   │   │   ├── measurement_defitions.yaml
+│   │   │   │   ├── smpl_measurement_vertices.yaml
+│   │   │   │   └── smplx_measurements.yaml
+│   │   │   ├── docs
+│   │   │   │   └── install.md
+│   │   │   ├── examples
+│   │   │   │   ├── fit_measurements.py
+│   │   │   │   └── vis_measurements.py
+│   │   │   ├── include
+│   │   │   │   ├── aabb.hpp
+│   │   │   │   ├── defs.hpp
+│   │   │   │   ├── double_vec_ops.h
+│   │   │   │   ├── double_vec_ops.hpp
+│   │   │   │   ├── helper_math.h
+│   │   │   │   ├── math_utils.hpp
+│   │   │   │   ├── moller.h
+│   │   │   │   ├── priority_queue.hpp
+│   │   │   │   └── triangle.hpp
+│   │   │   ├── LICENSE
+│   │   │   ├── mesh_mesh_intersection
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── loss.py
+│   │   │   │   └── mesh_mesh_intersection.py
+│   │   │   ├── optional-requirements.txt
+│   │   │   ├── README.md
+│   │   │   ├── requirements.txt
+│   │   │   ├── setup.py
+│   │   │   └── src
+│   │   │       ├── mesh_mesh_intersect.cpp
+│   │   │       └── mesh_mesh_intersect_cuda_op.cu
+│   │   ├── SHAPY.py
+│   │   └── test_submission_format.py
+│   ├── SPEC
+│   │   └── SPEC.py
+│   ├── SSP3D
+│   │   └── SSP3D.py
+│   ├── SynBody
+│   │   └── SynBody.py
+│   ├── Talkshow
+│   │   └── Talkshow.py
+│   ├── UBody
+│   │   └── UBody.py
+│   └── UP3D
+│       └── UP3D.py
+├── LICENSE
+├── main
+│   ├── _base_
+│   │   ├── datasets
+│   │   │   ├── 300w.py
+│   │   │   ├── aflw.py
+│   │   │   ├── aic.py
+│   │   │   ├── animalpose.py
+│   │   │   ├── ap10k.py
+│   │   │   ├── atrw.py
+│   │   │   ├── campus.py
+│   │   │   ├── coco.py
+│   │   │   ├── coco_wholebody_face.py
+│   │   │   ├── coco_wholebody_hand.py
+│   │   │   ├── coco_wholebody.py
+│   │   │   ├── cofw.py
+│   │   │   ├── crowdpose.py
+│   │   │   ├── deepfashion_full.py
+│   │   │   ├── deepfashion_lower.py
+│   │   │   ├── deepfashion_upper.py
+│   │   │   ├── fly.py
+│   │   │   ├── freihand2d.py
+│   │   │   ├── h36m.py
+│   │   │   ├── halpe.py
+│   │   │   ├── horse10.py
+│   │   │   ├── interhand2d.py
+│   │   │   ├── interhand3d.py
+│   │   │   ├── jhmdb.py
+│   │   │   ├── locust.py
+│   │   │   ├── macaque.py
+│   │   │   ├── mhp.py
+│   │   │   ├── mpi_inf_3dhp.py
+│   │   │   ├── mpii.py
+│   │   │   ├── mpii_trb.py
+│   │   │   ├── nvgesture.py
+│   │   │   ├── ochuman.py
+│   │   │   ├── onehand10k.py
+│   │   │   ├── panoptic_body3d.py
+│   │   │   ├── panoptic_hand2d.py
+│   │   │   ├── posetrack18.py
+│   │   │   ├── rhd2d.py
+│   │   │   ├── shelf.py
+│   │   │   ├── wflw.py
+│   │   │   └── zebra.py
+│   │   ├── default_runtime.py
+│   │   └── filters
+│   │       ├── gaussian.py
+│   │       ├── one_euro.py
+│   │       ├── savizky_golay.py
+│   │       ├── smoothnet_h36m.md
+│   │       ├── smoothnet_t16_h36m.py
+│   │       ├── smoothnet_t32_h36m.py
+│   │       ├── smoothnet_t64_h36m.py
+│   │       └── smoothnet_t8_h36m.py
+│   ├── config
+│   │   ├── config_ft_3dpw.py
+│   │   ├── config_ft_agora.py
+│   │   ├── config_ft_arctic.py
+│   │   ├── config_ft_egobody.py
+│   │   ├── config_ft_renbody.py
+│   │   ├── config_ft_ubody.py
+│   │   ├── config_smpler_x_b10.py
+│   │   ├── config_smpler_x_b20.py
+│   │   ├── config_smpler_x_b32.py
+│   │   ├── config_smpler_x_b5.py
+│   │   ├── config_smpler_x_h10.py
+│   │   ├── config_smpler_x_h20.py
+│   │   ├── config_smpler_x_h32.py
+│   │   ├── config_smpler_x_h5.py
+│   │   ├── config_smpler_x_l10.py
+│   │   ├── config_smpler_x_l20.py
+│   │   ├── config_smpler_x_l32.py
+│   │   ├── config_smpler_x_l5.py
+│   │   ├── config_smpler_x_s10.py
+│   │   ├── config_smpler_x_s20.py
+│   │   ├── config_smpler_x_s32.py
+│   │   └── config_smpler_x_s5.py
+│   ├── config.py
+│   ├── finetune.py
+│   ├── inference.py
+│   ├── render.py
+│   ├── slurm_inference.sh
+│   ├── slurm_test.sh
+│   ├── slurm_train.sh
+│   ├── SMPLer_X.py
+│   ├── test.py
+│   ├── train.py
+│   ├── transformer_utils
+│   │   ├── CITATION.cff
+│   │   ├── configs
+│   │   │   └── smpler_x
+│   │   │       ├── decoder
+│   │   │       │   ├── face_decoder.py
+│   │   │       │   └── hand_decoder.py
+│   │   │       └── encoder
+│   │   │           ├── body_encoder_base.py
+│   │   │           ├── body_encoder_huge.py
+│   │   │           ├── body_encoder_large.py
+│   │   │           └── body_encoder_small.py
+│   │   ├── LICENSE
+│   │   ├── MANIFEST.in
+│   │   ├── mmpose
+│   │   │   ├── core
+│   │   │   │   ├── bbox
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── transforms.py
+│   │   │   │   ├── camera
+│   │   │   │   │   ├── camera_base.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── single_camera.py
+│   │   │   │   │   └── single_camera_torch.py
+│   │   │   │   ├── distributed_wrapper.py
+│   │   │   │   ├── evaluation
+│   │   │   │   │   ├── bottom_up_eval.py
+│   │   │   │   │   ├── eval_hooks.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── mesh_eval.py
+│   │   │   │   │   ├── pose3d_eval.py
+│   │   │   │   │   └── top_down_eval.py
+│   │   │   │   ├── fp16
+│   │   │   │   │   ├── decorators.py
+│   │   │   │   │   ├── hooks.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── utils.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── optimizers
+│   │   │   │   │   ├── builder.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   └── layer_decay_optimizer_constructor.py
+│   │   │   │   ├── post_processing
+│   │   │   │   │   ├── group.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── nms.py
+│   │   │   │   │   ├── one_euro_filter.py
+│   │   │   │   │   ├── post_transforms.py
+│   │   │   │   │   ├── smoother.py
+│   │   │   │   │   └── temporal_filters
+│   │   │   │   │       ├── builder.py
+│   │   │   │   │       ├── filter.py
+│   │   │   │   │       ├── gaussian_filter.py
+│   │   │   │   │       ├── __init__.py
+│   │   │   │   │       ├── one_euro_filter.py
+│   │   │   │   │       ├── savizky_golay_filter.py
+│   │   │   │   │       └── smoothnet_filter.py
+│   │   │   │   ├── utils
+│   │   │   │   │   ├── dist_utils.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── model_util_hooks.py
+│   │   │   │   │   └── regularizations.py
+│   │   │   │   └── visualization
+│   │   │   │       ├── image.py
+│   │   │   │       └── __init__.py
+│   │   │   ├── deprecated.py
+│   │   │   ├── __init__.py
+│   │   │   ├── models
+│   │   │   │   ├── backbones
+│   │   │   │   │   ├── alexnet.py
+│   │   │   │   │   ├── base_backbone.py
+│   │   │   │   │   ├── cpm.py
+│   │   │   │   │   ├── hourglass_ae.py
+│   │   │   │   │   ├── hourglass.py
+│   │   │   │   │   ├── hrformer.py
+│   │   │   │   │   ├── hrnet.py
+│   │   │   │   │   ├── hrt_checkpoint.py
+│   │   │   │   │   ├── hrt.py
+│   │   │   │   │   ├── i3d.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── litehrnet.py
+│   │   │   │   │   ├── mobilenet_v2.py
+│   │   │   │   │   ├── mobilenet_v3.py
+│   │   │   │   │   ├── modules
+│   │   │   │   │   │   ├── basic_block.py
+│   │   │   │   │   │   ├── bottleneck_block.py
+│   │   │   │   │   │   ├── ffn_block.py
+│   │   │   │   │   │   ├── __init__.py
+│   │   │   │   │   │   ├── multihead_attention.py
+│   │   │   │   │   │   ├── multihead_isa_attention.py
+│   │   │   │   │   │   ├── multihead_isa_pool_attention.py
+│   │   │   │   │   │   └── transformer_block.py
+│   │   │   │   │   ├── mspn.py
+│   │   │   │   │   ├── pvt.py
+│   │   │   │   │   ├── regnet.py
+│   │   │   │   │   ├── resnest.py
+│   │   │   │   │   ├── resnet.py
+│   │   │   │   │   ├── resnext.py
+│   │   │   │   │   ├── rsn.py
+│   │   │   │   │   ├── scnet.py
+│   │   │   │   │   ├── seresnet.py
+│   │   │   │   │   ├── seresnext.py
+│   │   │   │   │   ├── shufflenet_v1.py
+│   │   │   │   │   ├── shufflenet_v2.py
+│   │   │   │   │   ├── swin.py
+│   │   │   │   │   ├── tcformer.py
+│   │   │   │   │   ├── tcn.py
+│   │   │   │   │   ├── utils
+│   │   │   │   │   │   ├── channel_shuffle.py
+│   │   │   │   │   │   ├── ckpt_convert.py
+│   │   │   │   │   │   ├── __init__.py
+│   │   │   │   │   │   ├── inverted_residual.py
+│   │   │   │   │   │   ├── make_divisible.py
+│   │   │   │   │   │   ├── se_layer.py
+│   │   │   │   │   │   └── utils.py
+│   │   │   │   │   ├── v2v_net.py
+│   │   │   │   │   ├── vgg.py
+│   │   │   │   │   ├── vipnas_mbv3.py
+│   │   │   │   │   ├── vipnas_resnet.py
+│   │   │   │   │   └── vit.py
+│   │   │   │   ├── builder.py
+│   │   │   │   ├── detectors
+│   │   │   │   │   ├── base.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── poseur.py
+│   │   │   │   │   └── top_down.py
+│   │   │   │   ├── heads
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── poseur_head.py
+│   │   │   │   │   ├── rle_regression_head.py
+│   │   │   │   │   ├── topdown_heatmap_base_head.py
+│   │   │   │   │   ├── topdown_heatmap_multi_stage_head.py
+│   │   │   │   │   └── topdown_heatmap_simple_head.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── losses
+│   │   │   │   │   ├── classfication_loss.py
+│   │   │   │   │   ├── heatmap_loss.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── mesh_loss.py
+│   │   │   │   │   ├── mse_loss.py
+│   │   │   │   │   ├── multi_loss_factory.py
+│   │   │   │   │   ├── regression_loss.py
+│   │   │   │   │   └── rle_loss.py
+│   │   │   │   ├── misc
+│   │   │   │   │   ├── discriminator.py
+│   │   │   │   │   └── __init__.py
+│   │   │   │   ├── necks
+│   │   │   │   │   ├── channel_mapper.py
+│   │   │   │   │   ├── fpn.py
+│   │   │   │   │   ├── gap_neck.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── posewarper_neck.py
+│   │   │   │   │   └── tcformer_mta_neck.py
+│   │   │   │   ├── registry.py
+│   │   │   │   └── utils
+│   │   │   │       ├── ckpt_convert.py
+│   │   │   │       ├── geometry.py
+│   │   │   │       ├── __init__.py
+│   │   │   │       ├── misc.py
+│   │   │   │       ├── ops.py
+│   │   │   │       ├── positional_encoding.py
+│   │   │   │       ├── realnvp.py
+│   │   │   │       ├── smpl.py
+│   │   │   │       ├── tcformer_utils.py
+│   │   │   │       └── transformer.py
+│   │   │   ├── ops
+│   │   │   │   ├── csrc
+│   │   │   │   │   └── pytorch
+│   │   │   │   │       ├── info.cpp
+│   │   │   │   │       ├── ms_deform_attn.cpp
+│   │   │   │   │       ├── ms_deform_attn_cuda.cu
+│   │   │   │   │       └── ms_deform_attn_cuda_kernel.cuh
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── multi_scale_deform_attn.py
+│   │   │   ├── utils
+│   │   │   │   ├── collect_env.py
+│   │   │   │   ├── hooks.py
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── logger.py
+│   │   │   │   ├── setup_env.py
+│   │   │   │   └── timer.py
+│   │   │   └── version.py
+│   │   ├── mmpose_README_CN.md
+│   │   ├── mmpose_README.md
+│   │   ├── model-index.yml
+│   │   ├── pytest.ini
+│   │   ├── README.md
+│   │   ├── requirements
+│   │   │   ├── build.txt
+│   │   │   ├── docs.txt
+│   │   │   ├── mminstall.txt
+│   │   │   ├── optional.txt
+│   │   │   ├── readthedocs.txt
+│   │   │   ├── runtime.txt
+│   │   │   └── tests.txt
+│   │   ├── requirements.txt
+│   │   ├── resources
+│   │   │   └── mmpose-logo.png
+│   │   ├── setup.cfg
+│   │   └── setup.py
+│   └── visualise.py
+├── pretrained_models
+│   ├── mmdet
+│   │   ├── faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+│   │   └── mmdet_faster_rcnn_r50_fpn_coco.py
+│   └── smpler_x_h32.pth.tar
+├── proj_files.txt
+├── README.md
+└── requirements.txt
+
+94 directories, 378 files
