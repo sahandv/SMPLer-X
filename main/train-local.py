@@ -3,6 +3,9 @@ import torch
 import torch.backends.cudnn as cudnn
 from config import cfg
 import os.path as osp
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # ddp
 import torch.distributed as dist
@@ -10,7 +13,8 @@ from common.utils.distribute_utils import (
     init_distributed_mode, is_main_process, set_seed
 )
 import torch.distributed as dist
-from mmcv.runner import get_dist_info
+# from mmcv.runner import get_dist_info
+from mmengine.dist import get_dist_info
 
 def parse_args():
     parser = argparse.ArgumentParser()
