@@ -43,7 +43,6 @@ def main():
 
 
     # ddp by default in this branch
-    distributed, gpu_idx = init_distributed_mode(args.master_port)
     from base import Trainer
     trainer = Trainer(distributed, gpu_idx)
     

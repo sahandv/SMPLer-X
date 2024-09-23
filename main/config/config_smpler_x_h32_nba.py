@@ -26,9 +26,9 @@ agora_valid_root_pose = True
 # all
 # dataset_list = ['Human36M', 'MSCOCO', 'MPII', 'AGORA', 'EHF', 'SynBody', 'GTA_Human2', \
 #     'EgoBody_Egocentric', 'EgoBody_Kinect', 'UBody', 'PW3D', 'MuCo', 'PROX']
-dataset_list = ['NBA']
+dataset_list = ['MSCOCO']# ['NBA']
 # trainset_3d = ['MSCOCO','AGORA', 'UBody']
-trainset_3d = ['NBA'] 
+trainset_3d = ['MSCOCO']# ['NBA'] 
 # trainset_2d = ['PW3D', 'MPII', 'Human36M']
 trainset_2d = []
 # trainset_humandata = ['BEDLAM', 'SPEC', 'GTA_Human2','SynBody', 'PoseTrack',
