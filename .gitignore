@@ -1,7 +1,8 @@
 __pycache__/
 common/utils/human_model_files
 pretrained_models/
-dataset
+dataset/*
+!dataset/cache/.gitkeep
 output
 .vscode
 *.npy
