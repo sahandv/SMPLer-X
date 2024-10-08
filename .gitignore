@@ -1,6 +1,7 @@
 __pycache__/
 common/utils/human_model_files
-pretrained_models/
+pretrained_models/*
+pretrained_models/README.md
 dataset/*
 !dataset/cache/.gitkeep
 output
