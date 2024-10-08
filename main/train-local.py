@@ -13,8 +13,8 @@ from common.utils.distribute_utils import (
     init_distributed_mode, is_main_process, set_seed
 )
 import torch.distributed as dist
-# from mmcv.runner import get_dist_info
-from mmengine.dist import get_dist_info
+from mmcv.runner import get_dist_info
+# from mmengine.dist import get_dist_info
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -49,9 +49,9 @@ def main():
     # ddp
     if distributed:
         trainer.logger_info('### Set DDP ###')
-        trainer.logger.info(f'Distributed: {distributed}, init done {gpu_idx}')
-    else:
-        raise Exception("DDP not setup properly")
+    trainer.logger.info(f'Distributed: {distributed}, init done {gpu_idx}')
+    # else:
+    #     raise Exception("DDP not setup properly")
     
     trainer.logger_info(f"Using {cfg.num_gpus} GPUs, batch size {cfg.train_batch_size} per GPU.")
     
