@@ -128,6 +128,7 @@ def main():
             }, epoch)
 
         dist.barrier()
+    trainer.logger_info('### Training done ###')
 
 if __name__ == "__main__":
     main()
