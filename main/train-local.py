@@ -65,14 +65,15 @@ def main():
         trainer.logger_info(f'train with train_2d={cfg.trainset_2d}')
         trainer.logger_info(f'train with trainset_humandata={cfg.trainset_humandata}')
 
-    trainer.logger_info('### Start training ###')
-
+    trainer.logger_info(f'### Start training fromm epoch {trainer.start_epoch} to {cfg.end_epoch}  ###')
+    
     for epoch in range(trainer.start_epoch, cfg.end_epoch):
         trainer.tot_timer.tic()
         trainer.read_timer.tic()
         
         # ddp, align random seed between devices
-        trainer.batch_generator.sampler.set_epoch(epoch)
+        if distributed:
+            trainer.batch_generator.sampler.set_epoch(epoch)
 
         for itr, (inputs, targets, meta_info) in enumerate(trainer.batch_generator):
             trainer.read_timer.toc()
@@ -94,8 +95,9 @@ def main():
                 # loss of all ranks
                 rank, world_size = get_dist_info()
                 loss_print = loss_mean.copy()
-                for k in loss_print:
-                    dist.all_reduce(loss_print[k]) 
+                if distributed:
+                    for k in loss_print:
+                        dist.all_reduce(loss_print[k]) 
                 
                 total_loss = 0
                 for k in loss_print:
@@ -126,8 +128,9 @@ def main():
                 'network': trainer.model.state_dict(),
                 'optimizer': trainer.optimizer.state_dict(),
             }, epoch)
-
-        dist.barrier()
+        if distributed:
+            dist.barrier()
+        
     trainer.logger_info('### Training done ###')
 
 if __name__ == "__main__":
