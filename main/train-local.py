@@ -17,7 +17,8 @@ from mmcv.runner import get_dist_info
 # from mmengine.dist import get_dist_info
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    # sample command to run: python train-local.py --num_gpus 1 --exp_name train_test1 --config config_smpler_x_h32_nba.py 
+    parser = argparse.ArgumentParser(title='SMPLer-X Training Script without DDP')
     # parser.add_argument('--gpu', type=str, dest='gpu_ids')
     parser.add_argument('--num_gpus', type=int, dest='num_gpus')
     parser.add_argument('--master_port', type=int, dest='master_port')
