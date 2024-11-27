@@ -4,7 +4,35 @@ import numpy as np
 import torch
 from pycocotools.coco import COCO
 from utils.preprocessing import load_img, process_bbox, augmentation
+from mmhuman3d.core.conventions.keypoints_mapping import KEYPOINTS_FACTORY
 from torch.utils.data import Dataset
+
+NBA_KEYPOINTS = [
+    
+]
+
+
+mmhuman3d_mapping = {
+    'LAR': 'left_shoulder',
+    'LFA': 'left_elbow',
+    'LFT': 'left_foot',
+    'LHA': 'left_hand',
+    'LSK': 'left_knee',
+    'LTH': 'left_hip',
+    'Middle Trunk': 'spine',
+    'Neck': 'neck',
+    'RAR': 'right_shoulder',
+    'RFA': 'right_elbow',
+    'RFT': 'right_foot',
+    'RHA': 'right_hand',
+    'RHE': 'right_heel',
+    'RHENeck': 'right_upperarm',
+    'RPV': 'pelvis',
+    'RSK': 'right_knee',
+    'RTA': 'right_ankle',
+    'RTH': 'right_hip',
+    'Upper Trunk': 'upper_chest',
+}
 
 class NBA(Dataset):
     def __init__(self, transform, data_split):
