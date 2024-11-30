@@ -3,6 +3,9 @@ import os.path as osp
 import sys
 import datetime
 from mmcv import Config as MMConfig
+# from mmengine.config import Config as MMConfig
+
+
 
 class Config:
     def get_config_fromfile(self, config_path):

@@ -57,6 +57,7 @@ class Cache():
 
     @classmethod
     def save(cls, save_path, data_list, data_strategy):
+        # print(f'Saving cache to {save_path}...')
         assert save_path is not None, 'save_path is None'
         data_len = len(data_list)
         cache = {}
@@ -64,10 +65,12 @@ class Cache():
             cache[str(i)] = data
         assert len(cache) == data_len
         # update meta
+        # print(f'Cache data length: {data_len}')
+        # print(f'Cache data strategy: {data_strategy}')
         cache.update({
             'data_len': data_len,
             'data_strategy': data_strategy})
-
+        print(f'Cache saving now...')
         np.savez_compressed(save_path, **cache)
         print(f'Cache saved to {save_path}.')
 

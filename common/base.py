@@ -18,6 +18,7 @@ from utils.distribute_utils import (
     get_rank, is_main_process, time_synchronized, get_group_idx, get_process_groups
 )
 from mmcv.runner import get_dist_info
+# from mmengine.dist import get_dist_info
 
 # dynamic dataset import
 for i in range(len(cfg.trainset_3d)):

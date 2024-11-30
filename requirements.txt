@@ -1,4 +1,5 @@
 numpy
+cython==0.29.33
 scikit-image
 scipy
 scikit-learn

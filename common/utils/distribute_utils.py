@@ -8,6 +8,7 @@ import time
 import torch
 import torch.distributed as dist
 from mmcv.runner import get_dist_info
+# from mmengine.dist import get_dist_info
 import random
 import numpy as np
 import subprocess
