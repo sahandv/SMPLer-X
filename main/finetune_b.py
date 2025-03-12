@@ -3,9 +3,6 @@ import torch
 import torch.backends.cudnn as cudnn
 from config import cfg
 import os.path as osp
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # ddp
 import torch.distributed as dist
@@ -14,16 +11,17 @@ from common.utils.distribute_utils import (
 )
 import torch.distributed as dist
 from mmcv.runner import get_dist_info
-# from mmengine.dist import get_dist_info
 
 def parse_args():
-    # sample command to run: python train-local.py --num_gpus 1 --exp_name train_test1 --config config_smpler_x_h32_nba.py 
-    parser = argparse.ArgumentParser(title='SMPLer-X Training Script without DDP')
+    parser = argparse.ArgumentParser()
     # parser.add_argument('--gpu', type=str, dest='gpu_ids')
     parser.add_argument('--num_gpus', type=int, dest='num_gpus')
     parser.add_argument('--master_port', type=int, dest='master_port')
     parser.add_argument('--exp_name', type=str, default='output/test')
     parser.add_argument('--config', type=str, default='./config/config_base.py')
+    parser.add_argument('--ft_lr_factor', type=float, default=0.1, description='fine-tune learning rate factor')
+    parser.add_argument('--pre_trained_model_path', type=str, default='../pretrained_models/smpler_x_h32.pth.tar')
+    parser.add_argument('--freeze_vit_backbone', type=bool, default=False, description='freeze fine-tuning ViT backbone')
     args = parser.parse_args()
 
     return args
@@ -33,27 +31,46 @@ def main():
     config_path = osp.join('./config', args.config)
     cfg.get_config_fromfile(config_path)
     cfg.update_config(args.num_gpus, args.exp_name)
+    pre_trained_model_path = args.pre_trained_model_path
+    fine_tune_lr_factor = args.ft_lr_factor
+    freeze_vit_backbone = args.freeze_vit_backbone
 
     cudnn.benchmark = True
     set_seed(2023)
 
-    if args.num_gpus > 1:
-        distributed, gpu_idx = init_distributed_mode(args.master_port)
-    else:
-        distributed, gpu_idx = False, 0
-
-
     # ddp by default in this branch
+    distributed, gpu_idx = init_distributed_mode(args.master_port)
     from base import Trainer
     trainer = Trainer(distributed, gpu_idx)
     
     # ddp
     if distributed:
         trainer.logger_info('### Set DDP ###')
-    trainer.logger.info(f'Distributed: {distributed}, init done {gpu_idx}')
-    # else:
-    #     raise Exception("DDP not setup properly")
+        trainer.logger.info(f'Distributed: {distributed}, init done {gpu_idx}')
+    else:
+        raise Exception("DDP not setup properly")
     
+    # Load pre-trained model
+    pre_trained_model_path = "path_to_pretrained_model.pth"
+    if osp.exists(pre_trained_model_path):
+        checkpoint = torch.load(pre_trained_model_path)
+        trainer.model.load_state_dict(checkpoint['network'])
+        trainer.logger_info(f"Loaded pre-trained model from {pre_trained_model_path}")
+    
+    # Freeze the ViT backbone layers
+    if freeze_vit_backbone:
+        trainer.logger_info("Freezing ViT backbone layers")
+        for param in trainer.model.backbone.parameters():
+            param.requires_grad = False
+
+    # Adjust learning rate for fine-tuning
+    print("train_lr before fine-tuning: ", cfg.train_lr)
+    cfg.train_lr *= fine_tune_lr_factor
+    print("train_lr after fine-tuning: ", cfg.train_lr)
+
+    trainer.optimizer = torch.optim.Adam(trainer.model.parameters(), lr=cfg.train_lr)
+
+
     trainer.logger_info(f"Using {cfg.num_gpus} GPUs, batch size {cfg.train_batch_size} per GPU.")
     
     trainer._make_batch_generator()
@@ -66,15 +83,14 @@ def main():
         trainer.logger_info(f'train with train_2d={cfg.trainset_2d}')
         trainer.logger_info(f'train with trainset_humandata={cfg.trainset_humandata}')
 
-    trainer.logger_info(f'### Start training fromm epoch {trainer.start_epoch} to {cfg.end_epoch}  ###')
+    trainer.logger_info('### Start fine-tuning ###')
 
     for epoch in range(trainer.start_epoch, cfg.end_epoch):
         trainer.tot_timer.tic()
         trainer.read_timer.tic()
-        
+
         # ddp, align random seed between devices
-        if distributed:
-            trainer.batch_generator.sampler.set_epoch(epoch)
+        trainer.batch_generator.sampler.set_epoch(epoch)
 
         for itr, (inputs, targets, meta_info) in enumerate(trainer.batch_generator):
             trainer.read_timer.toc()
@@ -96,9 +112,8 @@ def main():
                 # loss of all ranks
                 rank, world_size = get_dist_info()
                 loss_print = loss_mean.copy()
-                if distributed:
-                    for k in loss_print:
-                        dist.all_reduce(loss_print[k]) 
+                for k in loss_print:
+                    dist.all_reduce(loss_print[k]) 
                 
                 total_loss = 0
                 for k in loss_print:
@@ -129,10 +144,8 @@ def main():
                 'network': trainer.model.state_dict(),
                 'optimizer': trainer.optimizer.state_dict(),
             }, epoch)
-        if distributed:
-            dist.barrier()
-        
-    trainer.logger_info('### Training done ###')
+
+        dist.barrier()
 
 if __name__ == "__main__":
     main()
