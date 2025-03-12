@@ -1,0 +1,33 @@
+d_left_hand | p_left_hand
+p_left_hand | d_left _elbow
+p_left_elbow | d_left_shoulder
+d_left_shoulder | p_left_shoulder
+
+p_left_hip | d_left_hip
+d_left_hip | p_left_knee
+d_left_knee | p_left_foot
+p_left_foot | d_left_foot
+
+d_right_hand | p_right_hand
+p_right_hand | d_right _elbow
+p_right_elbow | d_right_shoulder
+d_right_shoulder | p_right_shoulder
+
+p_right_hip | d_right_hip
+d_right_hip | p_right_knee
+d_right_knee | p_right_foot
+p_right_foot | d_right_foot
+Q
+
+d_pelvis | p_pelvis
+p_pelvis | d_spine
+p_pelvis | p_RTA
+d_spine | p_spine
+d_spine | p_upper_chest
+p_spine | d_upper_chest
+p_upper_chest | d_upper_chest
+p_spine | d_RTA
+p_upper_chest | d_RTA
+p_RTA | d_RTA
+
+

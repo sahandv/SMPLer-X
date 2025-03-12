@@ -10,6 +10,7 @@ import math
 import copy
 from mmpose.models import build_posenet
 from mmcv import Config
+# from mmengine.config import Config
 
 class Model(nn.Module):
     def __init__(self, encoder, body_position_net, body_rotation_net, box_net, hand_position_net, hand_roi_net,

@@ -75,6 +75,7 @@ class UBody_Part(torch.utils.data.Dataset):
                 print(f'[{self.__class__.__name__}] Cache not found, generating cache...')
             self.datalist = self.load_data()
             if self.use_cache:
+                print(f'[{self.__class__.__name__}] Saving cache to {self.annot_path_cache}')
                 Cache.save(
                     self.annot_path_cache,
                     self.datalist,

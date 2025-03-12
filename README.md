@@ -209,6 +209,7 @@ cd main && python render.py \
 
 
 ## Training
+### SLURM
 ```bash
 cd main
 sh slurm_train.sh {JOB_NAME} {NUM_GPU} {CONFIG_FILE}
@@ -217,6 +218,12 @@ sh slurm_train.sh {JOB_NAME} {NUM_GPU} {CONFIG_FILE}
 sh slurm_train.sh smpler_x_h32 16 config_smpler_x_h32.py
 
 ```
+### Local
+```bash
+cd main
+python train-local.py --num_gpus 1 --exp_name train_test1 --config config_smpler_x_h32_nba.py
+```
+
 - CONFIG_FILE is the file name under `SMPLer-X/main/config`
 - Logs and checkpoints will be saved to `SMPLer-X/output/train_{JOB_NAME}_{DATE_TIME}`
 

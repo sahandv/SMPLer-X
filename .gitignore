@@ -1,7 +1,9 @@
 __pycache__/
 common/utils/human_model_files
-pretrained_models/
-dataset
+pretrained_models/*
+pretrained_models/README.md
+dataset/*
+!dataset/cache/.gitkeep
 output
 .vscode
 *.npy
@@ -15,3 +17,4 @@ demo/
 .idea/
 data/SHAPY/mesh-mesh-intersection/build/
 data/SHAPY/mesh-mesh-intersection/mesh_mesh_intersect_cuda.cpython-38-x86_64-linux-gnu.so
+train_test*
